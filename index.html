@@ -90,13 +90,42 @@ button{min-height:44px;border-radius:8px}
 table.dt{min-width:560px}
 table.dt th{font-size:.82rem;padding:10px 10px;white-space:nowrap}
 table.dt td{padding:12px 10px;vertical-align:middle}
-table.dt td.c-tgl{text-align:center;white-space:nowrap;border-right:1px solid var(--line)}
-details.gh{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:12px}details.gh summary{cursor:pointer;font-weight:700}
+table.dt td.c-no{color:var(--muted);width:44px;text-align:center}
+.dbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+.dbtn{background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:6px 14px;min-height:40px}
+.cal{border:1px solid var(--line);border-radius:12px;padding:12px;margin:0 0 12px;max-width:340px;background:var(--surface)}
+.cal[hidden]{display:none}
+.ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-weight:700;text-transform:capitalize}
+.ch button{background:var(--bg);color:var(--ink);border:1px solid var(--line);min-height:36px;min-width:36px;padding:0;border-radius:8px;font-size:1.2rem;line-height:1}
+.calg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.calg .w{font-size:.75rem;color:var(--muted);padding:4px 0}
+.calg button.d{position:relative;min-height:40px;padding:0;border-radius:8px;background:transparent;color:var(--ink);border:1px solid transparent}
+.calg button.d.has{font-weight:700;background:var(--bg)}
+.calg button.d.has::after{content:"";position:absolute;bottom:4px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--accent)}
+.calg button.d.today{border-color:var(--accent)}
+.calg button.d.sel{background:var(--accent);color:var(--accent-ink)}
+.calg button.d.sel::after{background:var(--accent-ink)}
+.cf{margin-top:10px}
+.bk{position:relative;display:inline-block}
+.bx{position:absolute;top:-8px;right:-8px;width:26px;height:26px;min-height:26px;min-width:26px;padding:0;border-radius:50%;background:var(--warn);color:#fff;font-size:1rem;line-height:1}
+.badd{border:1px dashed var(--line);background:var(--bg);color:var(--ink);padding:6px 12px;min-height:36px;border-radius:8px;font-size:.88rem}
+.mth{display:flex;flex-wrap:wrap;gap:10px}.mth:empty{display:none}
+.mth .mt{position:relative}
+.mth img{width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--line);display:block;cursor:pointer}
+.mth button{position:absolute;top:-8px;right:-8px;width:26px;height:26px;min-height:26px;min-width:26px;padding:0;border-radius:50%;background:var(--warn);color:#fff;font-size:1rem;line-height:1}
+.dchip{flex:none;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:6px 14px;min-height:36px;white-space:nowrap}
+.dchip small{opacity:.7;margin-left:6px;font-size:.8rem}
+.dchip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
+table.dt tr.dh td{background:var(--bg);font-weight:700;padding:10px;border-bottom:1px solid var(--line)}
+table.dt tr.dh small{color:var(--muted);font-weight:400;margin-left:8px}
+table.dt tbody tr.dh:hover{background:var(--bg)}
 table.dt tbody tr:hover{background:var(--bg)}
 .bd{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.82rem;font-weight:700;border:1px solid currentColor}
 .del{border:1px solid var(--line);color:var(--warn);padding:6px 12px;min-height:36px;border-radius:8px}
 .del:hover{background:var(--bg)}
 .th{width:44px;height:44px}
+details.sat{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:12px}details.sat summary{cursor:pointer;font-weight:700}details.sat .row{align-items:end}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:999px;padding:2px 4px 2px 12px;background:var(--bg)}.chip button{background:none;color:var(--warn);min-height:32px;min-width:32px;padding:0;font-size:1.2rem;line-height:1;border-radius:999px}
 @media (max-width:960px){
   .shell{max-width:760px;grid-template-columns:minmax(0,1fr);grid-template-rows:none;grid-template-areas:"form" "list" "print"}
 }
@@ -112,7 +141,10 @@ table.dt tbody tr:hover{background:var(--bg)}
   table.dt td.c-nama{grid-area:nama;font-size:1.02rem}
   table.dt td.c-jenis{grid-area:jenis;justify-self:end}
   table.dt td.c-qty{grid-area:qty}
-  table.dt td.c-tgl{grid-area:tgl;color:var(--muted);font-size:.88rem}
+  table.dt td.c-no{grid-area:tgl;width:auto;text-align:left;font-size:.88rem}
+  table.dt td.c-no::before{content:"No. "}
+  table.dt tr.dh{display:block;border:0;padding:4px 2px;margin:6px 0 2px;background:transparent}
+  table.dt tr.dh td{background:transparent;padding:0;border:0}
   table.dt td.c-del{grid-area:del;justify-self:end}
   table.dt tr.er{display:block;border:0;padding:0}
   .th{width:56px;height:56px}
@@ -157,11 +189,16 @@ table.dt tbody tr:hover{background:var(--bg)}
   <label>Jenis
     <select id="jenis"><option>Kering</option><option>Basah</option></select>
   </label>
-  <label>Foto bukti
+  <label>Foto bukti (opsional)
     <input id="foto" type="file" accept="image/*">
   </label>
   <p class="err" id="err" role="alert"></p>
   <button class="primary" type="submit">Simpan bahan</button>
+  <details class="sat"><summary>Kelola satuan</summary>
+    <div class="row"><label>Satuan baru<input id="sbn" type="text" maxlength="20" placeholder="Contoh: ember" autocomplete="off"></label><button class="primary" id="sbt" type="button">Tambah satuan</button></div>
+    <div id="schips" class="chips"></div>
+    <p class="err" id="smsg" role="status"></p>
+  </details>
 </form>
 
 <section class="listc card" aria-labelledby="lh">
@@ -172,10 +209,15 @@ table.dt tbody tr:hover{background:var(--bg)}
       <button class="tab" data-f="Basah" aria-pressed="false" type="button">Basah</button>
     </div>
   </div>
+  <div class="dbar">
+    <button type="button" class="dbtn" id="dbtn" aria-expanded="false" aria-controls="cal">Tanggal: <b id="dlabel"></b> &#9662;</button>
+    <button type="button" class="dchip" id="dall" aria-pressed="false">Semua tanggal</button>
+  </div>
+  <div class="cal" id="cal" hidden></div>
   <p class="count" id="count"></p>
   <div class="wrap">
   <table class="dt">
-    <thead><tr><th>Tanggal</th><th>Bahan</th><th>Banyak</th><th>Jenis</th><th>Bukti</th><th></th></tr></thead>
+    <thead><tr><th>No</th><th>Bahan</th><th>Banyak</th><th>Jenis</th><th>Bukti</th><th></th></tr></thead>
     <tbody id="list"></tbody>
   </table>
   </div>
@@ -188,25 +230,28 @@ table.dt tbody tr:hover{background:var(--bg)}
   </div>
   <div class="row">
     <label>Waktu<input id="pw" type="text" placeholder="Contoh: 07.30 WIB" autocomplete="off"></label>
-    <label>Tanggal data<select id="ptgl"></select></label>
+    <label>Tanggal data<input id="ptgl" type="date"></label>
   </div>
   <label>Nama ahli gizi<input id="pg" type="text" autocomplete="off"></label>
   <label>Menu siswa (diisi per tanggal, tampil di Dokumentasi Menu MBG)<textarea id="pm" rows="2" placeholder="Contoh: nasi putih, bistik ayam, tahu goreng, tumis buncis dan wortel, kurma golden valley"></textarea></label>
+  <label>Foto menu siswa (per tanggal, boleh lebih dari satu)<input id="pmf" type="file" accept="image/*" multiple></label>
+  <div class="mth" id="pmth"></div>
   <p class="err" id="perr" role="alert"></p>
   <div class="row">
     <button class="primary" id="pbtn" type="button">Cetak formulir</button>
     <button class="primary" id="pbtn2" type="button">Cetak penerimaan (foto)</button>
   </div>
-  <details class="gh"><summary>Simpan ke Google (Apps Script)</summary>
-    <label>URL Web App Apps Script<input id="gu" type="url" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off"></label>
-    <label>Kunci rahasia<input id="gk" type="password" autocomplete="off"></label>
-    <div class="row"><button class="primary" id="gsave" type="button">Simpan ke Google</button><button class="primary" id="gload" type="button">Muat dari Google</button></div>
-    <p class="err" id="gm" role="status"></p>
+  <details class="sat" open><summary>Simpan ke Supabase</summary>
+    <label>URL proyek Supabase<input id="sbu" type="url" placeholder="https://xxxx.supabase.co" autocomplete="off"></label>
+    <label>Kunci anon (anon public key)<input id="sbk" type="password" autocomplete="off"></label>
+    <div class="row"><button class="primary" id="sbs" type="button">Simpan ke Supabase</button><button class="primary" id="sbl" type="button">Muat dari Supabase</button></div>
+    <p class="err" id="sbm" role="status"></p>
   </details>
 </section>
 </div>
 </main>
 <div id="sheet"></div>
+<input type="file" id="bfile" accept="image/*" hidden>
 <div id="ov" class="ov" hidden><img id="ovi" alt="Foto bukti diperbesar"></div>
 
 <script>
@@ -232,7 +277,11 @@ table.dt tbody tr:hover{background:var(--bg)}
     if(assetsNS){ try{ var r=await assetsNS.upload(b); return {id:r.id}; }catch(e){} }
     return {data:await toData(b)}; }
   function fotoSrc(f){ return f ? (f.id ? "/_blob/"+f.id : f.data) : ""; }
-  function thumb(it){ var s=fotoSrc(it.foto); return s ? '<img class="th" src="'+esc(s)+'" alt="Foto bukti '+esc(it.bahan)+'" data-src="'+esc(s)+'">' : '-'; }
+  function thumb(it,i){
+    var s=fotoSrc(it.foto);
+    if(!s) return '<button type="button" class="badd" data-i="'+i+'">+ Foto</button>';
+    return '<span class="bk"><img class="th" src="'+esc(s)+'" alt="Foto bukti '+esc(it.bahan)+'" data-src="'+esc(s)+'"><button type="button" class="bx" data-i="'+i+'" aria-label="Hapus foto '+esc(it.bahan)+'">&times;</button></span>';
+  }
   function dropFoto(it){ try{ if(it&&it.foto&&it.foto.id&&assetsNS) assetsNS.delete(it.foto.id).catch(function(){}); }catch(e){} }
   var PKEY="catatan-bahan-cetak-v1", ps={k:"",a:"",w:"",m:"",menus:{},g:"R. Aj. Nabila Nur Syahlah Zhafirah, S.Gz."};
   try{ var r2=localStorage.getItem(PKEY); if(r2) ps=Object.assign(ps,JSON.parse(r2)); }catch(e){}
@@ -241,25 +290,19 @@ table.dt tbody tr:hover{background:var(--bg)}
   function dots(v){ return v ? esc(v) : "........................................................."; }
   function dmy(s){ var p=s.split("-"); return p[2]+"/"+p[1]+"/"+p[0].slice(2); }
   function longDate(s){ var p=s.split("-"); return new Date(p[0],p[1]-1,p[2]).toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"}); }
-  function fillDates(){
-    var sel=$("ptgl"), cur=sel.value, seen={}, ds=[];
-    items.forEach(function(it){ if(!seen[it.tgl]){ seen[it.tgl]=1; ds.push(it.tgl); } });
-    ds.sort().reverse();
-    sel.innerHTML='<option value="">Semua tanggal</option>'+ds.map(function(d){ return '<option value="'+d+'">'+esc(fmtDate(d))+'</option>'; }).join("");
-    if(cur && seen[cur]) sel.value=cur;
-    loadMenu();
-  }
+  function fillDates(){ loadMenu(); }
   function menuDate(){ var d=$("ptgl").value; if(!d){ items.forEach(function(it){ if(!d||it.tgl>d) d=it.tgl; }); } return d||today(); }
-  function loadMenu(){ ps.menus=ps.menus||{}; $("pm").value=ps.menus[menuDate()]||""; }
+  function loadMenu(){ ps.menus=ps.menus||{}; $("pm").value=ps.menus[menuDate()]||""; renderMenuFoto(); }
   function printTerima(){
     var d=$("ptgl").value;
     if(!d){ items.forEach(function(it){ if(!d||it.tgl>d) d=it.tgl; }); }
     var list=items.filter(function(it){ return it.tgl===d; }).slice().reverse();
     function pics(j){ return list.filter(function(it){ return it.jenis===j&&it.foto; }).map(function(it){ return '<img src="'+esc(fotoSrc(it.foto))+'" alt="Foto '+esc(it.bahan)+'">'; }).join(""); }
     var basah=pics("Basah"), kering=pics("Kering"), tg='<p class="tg"><b>Tanggal :</b> '+(d?longDate(d):"")+'</p>', html="";
+    var mf=((ps.menuFoto&&ps.menuFoto[d])||[]).map(function(f){ return '<img src="'+esc(fotoSrc(f))+'" alt="Foto menu">'; }).join("");
     if(!basah&&!kering){ $("perr").textContent="Tidak ada foto bukti untuk tanggal ini."; return; }
     $("perr").textContent="";
-    if(basah) html+='<div>'+tg+'<p class="jb">Penerimaan Bahan Basah</p><div class="ph">'+basah+'</div><p class="mh">Dokumentasi Menu MBG</p><div class="mn"><b>Menu siswa :</b><span>'+esc((ps.menus&&ps.menus[d])||"")+'</span></div></div>';
+    if(basah) html+='<div>'+tg+'<p class="jb">Penerimaan Bahan Basah</p><div class="ph">'+basah+'</div><p class="mh">Dokumentasi Menu MBG</p><div class="mn"><b>Menu siswa :</b><span>'+esc((ps.menus&&ps.menus[d])||"")+'</span></div>'+(mf?'<div class="ph" style="margin-top:8px;justify-content:center">'+mf+'</div>':'')+'</div>';
     if(kering) html+='<div'+(basah?' class="pg2"':'')+'>'+tg+'<p class="jb">Penerimaan Bahan Kering</p><div class="ph">'+kering+'</div></div>';
     $("sheet").innerHTML='<table class="pw2"><thead><tr><td></td></tr></thead><tfoot><tr><td></td></tr></tfoot><tbody><tr><td><div class="rc">'+html+'</div></td></tr></tbody></table>';
     var go=function(){ setTimeout(function(){ try{ window.print(); }catch(e){ $("perr").textContent="Browser memblokir cetak di halaman ini. Buka halaman di tab penuh lalu coba lagi."; } },150); };
@@ -296,23 +339,52 @@ table.dt tbody tr:hover{background:var(--bg)}
     else if(li && !li.complete){ li.onload=doPrint; li.onerror=doPrint; }
     else doPrint();
   }
+  var addIdx=-1, dsel=null, calY=0, calM=0, calOpen=false, lastCnt={};
+  function dlong(s){ var p=s.split("-"); return new Date(p[0],p[1]-1,p[2]).toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long",year:"numeric"}); }
+  function iso(y,m,d){ return y+"-"+("0"+(m+1)).slice(-2)+"-"+("0"+d).slice(-2); }
+  function drawCal(){
+    var c=$("cal"); c.hidden=!calOpen; $("dbtn").setAttribute("aria-expanded",String(calOpen));
+    if(!calOpen) return;
+    var first=new Date(calY,calM,1), start=(first.getDay()+6)%7, dim=new Date(calY,calM+1,0).getDate(), t=today();
+    var h='<div class="ch"><button type="button" data-n="-1" aria-label="Bulan sebelumnya">&lsaquo;</button><span>'+first.toLocaleDateString("id-ID",{month:"long",year:"numeric"})+'</span><button type="button" data-n="1" aria-label="Bulan berikutnya">&rsaquo;</button></div><div class="calg">';
+    ["Sen","Sel","Rab","Kam","Jum","Sab","Min"].forEach(function(w){ h+='<span class="w">'+w+'</span>'; });
+    for(var i=0;i<start;i++) h+='<span></span>';
+    for(var d=1;d<=dim;d++){ var k=iso(calY,calM,d); h+='<button type="button" class="d'+(lastCnt[k]?" has":"")+(k===t?" today":"")+(k===dsel?" sel":"")+'" data-d="'+k+'" aria-label="'+k+'">'+d+'</button>'; }
+    h+='</div><div class="cf"><button type="button" class="dchip" data-d="'+t+'">Hari ini</button></div>';
+    c.innerHTML=h;
+  }
   function render(){
-    var html="", shown=0, prevT=null,
-      vis=items.map(function(x,i){return i;}).filter(function(i){ return filter==="Semua"||items[i].jenis===filter; });
-    vis.forEach(function(i,k){
-      var it=items[i], tdTgl="";
-      shown++;
-      if(it.tgl!==prevT){ var n=1; while(k+n<vis.length&&items[vis[k+n]].tgl===it.tgl) n++; tdTgl='<td class="c-tgl" rowspan="'+n+'">'+esc(dmy(it.tgl))+'</td>'; }
-      prevT=it.tgl;
-      html+='<tr>'+tdTgl+'<td class="n c-nama">'+esc(it.bahan)+'</td><td class="c-qty">'+
-        Number(it.banyak).toLocaleString("id-ID")+' '+esc(it.satuan)+'</td><td class="c-jenis"><span class="bd '+esc(it.jenis)+'">'+esc(it.jenis)+'</span>'+
-        '</td><td class="c-foto">'+thumb(it)+'</td><td class="c-del"><button class="del" data-i="'+i+'" type="button">Hapus data</button></td></tr>';
+    var ds=[], seen={};
+    items.forEach(function(it){ if(!seen[it.tgl]){ seen[it.tgl]=1; ds.push(it.tgl); } });
+    ds.sort().reverse();
+    if(!dsel) dsel = seen[today()] ? today() : (ds[0]||null);
+    var vis=items.map(function(x,i){ return i; }).filter(function(i){ return filter==="Semua"||items[i].jenis===filter; });
+    var cnt={}; vis.forEach(function(i){ cnt[items[i].tgl]=(cnt[items[i].tgl]||0)+1; });
+    lastCnt=cnt;
+    if(!calY){ var nw=new Date(); calY=nw.getFullYear(); calM=nw.getMonth(); }
+    if(!calOpen && dsel && dsel!=="__all"){ var pp=dsel.split("-"); calY=+pp[0]; calM=+pp[1]-1; }
+    $("dlabel").textContent = dsel==="__all" ? "Semua" : (dsel ? dmy(dsel) : "-");
+    $("dall").setAttribute("aria-pressed", String(dsel==="__all"));
+    drawCal();
+    var show=dsel==="__all"?ds:(dsel?[dsel]:[]), html="", shown=0;
+    show.forEach(function(d){
+      var g=vis.filter(function(i){ return items[i].tgl===d; });
+      if(!g.length && dsel==="__all") return;
+      html+='<tr class="dh"><td colspan="6">'+esc(dlong(d))+'<small>'+g.length+' bahan</small></td></tr>';
+      g.forEach(function(i,k){
+        var it=items[i]; shown++;
+        html+='<tr><td class="c-no">'+(k+1)+'</td><td class="n c-nama">'+esc(it.bahan)+'</td><td class="c-qty">'+
+          Number(it.banyak).toLocaleString("id-ID")+' '+esc(it.satuan)+'</td><td class="c-jenis"><span class="bd '+esc(it.jenis)+'">'+esc(it.jenis)+'</span>'+
+          '</td><td class="c-foto">'+thumb(it,i)+'</td><td class="c-del"><button class="del" data-i="'+i+'" type="button">Hapus data</button></td></tr>';
+      });
     });
-    $("list").innerHTML = html || '<tr class="er"><td colspan="6" class="empty">Belum ada data. Isi formulir untuk menambah bahan.</td></tr>';
+    if(!shown) html="";
+    $("list").innerHTML = html || '<tr class="er"><td colspan="6" class="empty">'+(items.length?"Tidak ada bahan untuk pilihan ini.":"Belum ada data. Isi formulir untuk menambah bahan.")+'</td></tr>';
     $("count").textContent = shown+" bahan ditampilkan dari "+items.length;
     fillDates();
   }
   $("tgl").value=today();
+  $("ptgl").value=today();
   $("ov").addEventListener("click",function(){ $("ov").hidden=true; });
   [["pk","k"],["pa","a"],["pw","w"],["pg","g"]].forEach(function(m){
     $(m[0]).value=ps[m[1]];
@@ -331,15 +403,22 @@ table.dt tbody tr:hover{background:var(--bg)}
     if(isNaN(banyak)||banyak<=0){ $("err").textContent="Isi banyak dengan angka lebih dari 0."; $("banyak").focus(); return; }
     $("err").textContent="";
     var file=$("foto").files[0];
-    if(!file){ $("err").textContent="Foto bukti wajib diunggah."; $("foto").focus(); return; }
-    $("err").textContent="Mengunggah foto...";
-    var foto; try{ foto=await makeFoto(file); }catch(x){ $("err").textContent="Foto tidak bisa dibaca. Pilih file gambar lain."; return; }
+    var foto=null;
+    if(file){
+      $("err").textContent="Mengunggah foto...";
+      try{ foto=await makeFoto(file); }catch(x){ $("err").textContent="Foto tidak bisa dibaca. Pilih file gambar lain, atau kosongkan untuk menyimpan tanpa foto."; return; }
+    }
     $("err").textContent="";
     items.unshift({tgl:tgl,bahan:bahan,banyak:banyak,satuan:$("satuan").value,jenis:$("jenis").value,foto:foto});
+    if(dsel!=="__all") dsel=tgl;
     save(); render();
     $("bahan").value=""; $("banyak").value=""; $("foto").value=""; $("bahan").focus();
   });
   $("list").addEventListener("click",function(e){
+    var rm=e.target.closest(".bx");
+    if(rm){ var it0=items[+rm.dataset.i]; if(it0){ dropFoto(it0); it0.foto=null; save(); render(); } return; }
+    var ad=e.target.closest(".badd");
+    if(ad){ addIdx=+ad.dataset.i; $("bfile").click(); return; }
     var t=e.target.closest(".th");
     if(t){ $("ovi").src=t.dataset.src; $("ov").hidden=false; return; }
     var b=e.target.closest(".del"); if(!b) return;
@@ -351,42 +430,117 @@ table.dt tbody tr:hover{background:var(--bg)}
     document.querySelectorAll(".tab").forEach(function(x){ x.setAttribute("aria-pressed", x===t?"true":"false"); });
     render();
   });
-  var GK="catatan-bahan-gs", g={u:"",k:"Tz755cBz148FYAVhgdT7YXfS"}, gver=null, gconf=false;
-  try{ var graw=localStorage.getItem(GK); if(graw) g=Object.assign(g,JSON.parse(graw)); }catch(e){}
-  [["gu","u"],["gk","k"]].forEach(function(m){ $(m[0]).value=g[m[1]]; $(m[0]).addEventListener("input",function(){ g[m[1]]=$(m[0]).value.trim(); gver=null; gconf=false; try{ localStorage.setItem(GK,JSON.stringify(g)); }catch(e){} }); });
-  function gmsg(s){ $("gm").textContent=s; }
-  function gerr(e){ gmsg(e.message==="Failed to fetch"?"Tidak bisa menghubungi Google. Periksa URL Web App, dan buka dari GitHub Pages atau file yang diunduh, bukan dari halaman terbit.":e.message); }
-  function gok(){ if(!g.u||!g.k){ gmsg("Isi URL Web App dan kunci rahasia dulu."); return false; } return true; }
-  async function gcall(body){
-    var r=await fetch(g.u,{method:"POST",body:JSON.stringify(Object.assign({key:g.k},body))});
-    if(!r.ok) throw new Error("Server Google menjawab "+r.status);
-    var j; try{ j=await r.json(); }catch(e){ throw new Error("Jawaban server tidak valid. Pastikan akses Web App diatur ke Anyone."); }
-    if(!j.ok&&!j.conflict) throw new Error(j.error||"Gagal");
-    return j;
+  var UK="catatan-bahan-satuan-daftar", ssel=$("satuan"), units=null;
+  var DEF=Array.prototype.slice.call(ssel.options).map(function(o){ return o.textContent; });
+  function lc(a){ return String(a).toLowerCase(); }
+  try{ units=JSON.parse(localStorage.getItem(UK)); }catch(e){ units=null; }
+  if(!Array.isArray(units)||!units.length){
+    var ox=[], od=[];
+    try{ ox=JSON.parse(localStorage.getItem("catatan-bahan-satuan"))||[]; od=JSON.parse(localStorage.getItem("catatan-bahan-satuan-hapus"))||[]; }catch(e){}
+    units=DEF.filter(function(d){ return od.indexOf(d)<0; }).concat(ox.filter(function(x){ return DEF.indexOf(x)<0; }));
+    if(!units.length) units=DEF.slice();
   }
-  $("gsave").addEventListener("click",async function(){
-    if(!gok()) return; gmsg("Menyimpan...");
-    try{
-      if(gver===null){ var j=await gcall({action:"load"}); gver=j.ver; if(!j.empty&&!gconf){ gconf=true; gmsg("Sudah ada data di Google. Klik Simpan lagi untuk menimpa, atau Muat untuk mengambilnya."); return; } }
-      var r=await gcall({action:"save",data:{items:items,ps:ps},base:gver,force:gconf});
-      if(r.conflict){ gver=r.ver; gconf=true; gmsg("Data di Google berubah dari perangkat lain. Klik Simpan lagi untuk menimpa, atau Muat untuk mengambilnya."); return; }
-      gver=r.ver; gconf=false;
-      var n=items.filter(function(i){ return i.foto&&i.foto.id; }).length;
-      gmsg("Tersimpan ke Google."+(n?" "+n+" foto dari halaman terbit tidak ikut tersimpan.":""));
-    }catch(e){ gerr(e); }
+  function uSave(){ try{ localStorage.setItem(UK,JSON.stringify(units)); }catch(e){} }
+  function uMsg(t){ $("smsg").textContent=t; }
+  function uRender(sel){
+    var cur=sel||ssel.value;
+    ssel.innerHTML=units.map(function(u){ return "<option>"+esc(u)+"</option>"; }).join("");
+    if(units.indexOf(cur)>-1) ssel.value=cur;
+    $("schips").innerHTML=units.map(function(u,i){ return '<span class="chip">'+esc(u)+'<button type="button" data-i="'+i+'" aria-label="Hapus satuan '+esc(u)+'">&times;</button></span>'; }).join("");
+  }
+  function sAdd(){
+    var n=$("sbn").value.trim().replace(/\s+/g," ");
+    if(!n){ uMsg("Tulis nama satuan dulu."); return; }
+    var ex=units.filter(function(u){ return lc(u)===lc(n); })[0];
+    if(!ex){ units.push(n); uSave(); ex=n; uMsg('Satuan "'+n+'" ditambahkan.'); } else uMsg('Satuan "'+ex+'" sudah ada.');
+    $("sbn").value=""; uRender(ex);
+  }
+  $("sbt").addEventListener("click",sAdd);
+  $("sbn").addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); sAdd(); } });
+  $("schips").addEventListener("click",function(e){
+    var b=e.target.closest("button"); if(!b) return;
+    if(units.length<=1){ uMsg("Minimal harus ada satu satuan."); return; }
+    var u=units.splice(+b.dataset.i,1)[0]; uSave(); uRender(); uMsg('Satuan "'+u+'" dihapus.');
   });
-  $("gload").addEventListener("click",async function(){
-    if(!gok()) return;
-    if(!confirm("Data di perangkat ini akan diganti dengan data dari Google. Lanjut?")) return;
-    gmsg("Memuat...");
+  uRender();
+  $("dbtn").addEventListener("click",function(){ calOpen=!calOpen; drawCal(); });
+  $("dall").addEventListener("click",function(){ dsel="__all"; calOpen=false; render(); });
+  $("cal").addEventListener("click",function(e){
+    var b=e.target.closest("button"); if(!b) return;
+    if(b.dataset.n){ calM+=+b.dataset.n; if(calM<0){ calM=11; calY--; } else if(calM>11){ calM=0; calY++; } drawCal(); return; }
+    if(b.dataset.d){ dsel=b.dataset.d; calOpen=false; render(); }
+  });
+  function menuFotos(){ ps.menuFoto=ps.menuFoto||{}; return ps.menuFoto[menuDate()]||[]; }
+  function saveP(){ try{ localStorage.setItem(PKEY,JSON.stringify(ps)); }catch(e){ $("perr").textContent="Penyimpanan browser penuh. Foto menu tidak tersimpan permanen."; } }
+  function renderMenuFoto(){
+    $("pmth").innerHTML=menuFotos().map(function(f,i){ var src=esc(fotoSrc(f)); return '<span class="mt"><img src="'+src+'" alt="Foto menu" data-src="'+src+'"><button type="button" data-i="'+i+'" aria-label="Hapus foto menu">&times;</button></span>'; }).join("");
+  }
+  $("pmth").addEventListener("click",function(e){
+    var im=e.target.closest("img"); if(im){ $("ovi").src=im.dataset.src; $("ov").hidden=false; return; }
+    var b=e.target.closest("button"); if(!b) return;
+    var l=menuFotos(); var f=l.splice(+b.dataset.i,1)[0]; dropFoto({foto:f}); saveP(); renderMenuFoto();
+  });
+  $("pmf").addEventListener("change",async function(){
+    var fs=[].slice.call($("pmf").files); if(!fs.length) return;
+    var d=menuDate(); $("perr").textContent="Mengunggah foto menu...";
+    ps.menuFoto=ps.menuFoto||{}; var l=ps.menuFoto[d]=ps.menuFoto[d]||[], bad=false;
+    for(var k=0;k<fs.length;k++){ try{ l.push(await makeFoto(fs[k])); }catch(x){ bad=true; } }
+    $("pmf").value=""; $("perr").textContent=bad?"Ada foto yang tidak bisa dibaca.":"";
+    saveP(); renderMenuFoto();
+  });
+  $("bfile").addEventListener("change",async function(){
+    var f=$("bfile").files[0], ix=addIdx;
+    if(!f||!items[ix]){ $("bfile").value=""; return; }
+    try{ var fo=await makeFoto(f); items[ix].foto=fo; save(); render(); $("err").textContent=""; }
+    catch(x){ $("err").textContent="Foto tidak bisa dibaca. Pilih file gambar lain."; }
+    $("bfile").value="";
+  });
+  var BK="catatan-bahan-sb", b={u:"",k:""}, bver=null, bconf=false;
+  try{ var braw=localStorage.getItem(BK); if(braw) b=Object.assign(b,JSON.parse(braw)); }catch(e){}
+  if(!b.u) b.u="https://zaficacawkcbgcssvxgy.supabase.co";
+  if(!b.k) b.k="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InphZmljYWNhd2tjYmdjc3N2eGd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMwMDQwMjAsImV4cCI6MjEwODU4MDAyMH0.lBXCKm1gOGJI3rSOKRM9yGsCy9F33ZLpPb3w1WGlwsM";
+  [["sbu","u"],["sbk","k"]].forEach(function(m){ $(m[0]).value=b[m[1]]; $(m[0]).addEventListener("input",function(){ b[m[1]]=$(m[0]).value.trim(); bver=null; bconf=false; try{ localStorage.setItem(BK,JSON.stringify(b)); }catch(e){} }); });
+  function bmsg(t){ $("sbm").textContent=t; }
+  function berr(e){ bmsg(e.message==="Failed to fetch"?"Tidak bisa menghubungi Supabase. Periksa URL proyek, dan buka dari GitHub Pages atau file yang diunduh, bukan dari halaman terbit.":e.message); }
+  function bok(){ if(!b.u||!b.k){ bmsg("Isi URL proyek dan kunci anon dulu."); return false; } return true; }
+  function bbase(){ return b.u.replace(/\/+$/,""); }
+  function btoken(){ return b.k; }
+  async function bapi(tok,path,opt){
+    opt=opt||{};
+    var r=await fetch(bbase()+"/rest/v1/catatan_state"+path,{method:opt.m||"GET",headers:(function(){ var h={"apikey":b.k,"Content-Type":"application/json","Prefer":"return=representation"}; if(b.k.indexOf("sb_")!==0) h["Authorization"]="Bearer "+tok; return h; })(),body:opt.body?JSON.stringify(opt.body):undefined});
+    if(!r.ok){ var t=""; try{ t=(await r.json()).message||""; }catch(x){} throw new Error(r.status===404?"Tabel catatan_state belum ada. Jalankan supabase.sql dulu.":"Supabase "+r.status+(t?": "+t:"")); }
+    return r.json();
+  }
+  $("sbs").addEventListener("click",async function(){
+    if(!bok()) return; bmsg("Menyimpan...");
     try{
-      var j=await gcall({action:"load"}); gver=j.ver;
-      if(j.empty){ gmsg("Belum ada data di Google."); return; }
-      var d=j.data; items=d.items||[]; ps=Object.assign(ps,d.ps||{}); save();
+      var tok=await btoken(), rows;
+      if(bver===null){
+        rows=await bapi(tok,"?id=eq.main&select=updated_at"); bver=rows.length?rows[0].updated_at:0;
+        if(rows.length&&!bconf){ bconf=true; bmsg("Sudah ada data di Supabase. Klik Simpan lagi untuk menimpa, atau Muat untuk mengambilnya."); return; }
+      }
+      var data={items:items,ps:ps}, now=new Date().toISOString();
+      if(!bver) rows=await bapi(tok,"",{m:"POST",body:{id:"main",data:data,updated_at:now}});
+      else rows=await bapi(tok,"?id=eq.main"+(bconf?"":"&updated_at=eq."+encodeURIComponent(bver)),{m:"PATCH",body:{data:data,updated_at:now}});
+      if(!rows.length){ bver=null; bconf=true; bmsg("Data di Supabase berubah dari perangkat lain. Klik Simpan lagi untuk menimpa, atau Muat untuk mengambilnya."); return; }
+      bver=rows[0].updated_at; bconf=false;
+      var n=items.filter(function(i){ return i.foto&&i.foto.id; }).length;
+      bmsg("Tersimpan ke Supabase."+(n?" "+n+" foto dari halaman terbit tidak ikut tersimpan.":""));
+    }catch(e){ berr(e); }
+  });
+  $("sbl").addEventListener("click",async function(){
+    if(!bok()) return;
+    if(!confirm("Data di perangkat ini akan diganti dengan data dari Supabase. Lanjut?")) return;
+    bmsg("Memuat...");
+    try{
+      var tok=await btoken(), rows=await bapi(tok,"?id=eq.main&select=data,updated_at");
+      if(!rows.length){ bver=0; bmsg("Belum ada data di Supabase."); return; }
+      var d=rows[0].data||{}; bver=rows[0].updated_at; bconf=false;
+      items=d.items||[]; ps=Object.assign(ps,d.ps||{}); save();
       try{ localStorage.setItem(PKEY,JSON.stringify(ps)); }catch(e){}
       [["pk","k"],["pa","a"],["pw","w"],["pg","g"]].forEach(function(m){ $(m[0]).value=ps[m[1]]||""; });
-      render(); gconf=false; gmsg("Data dimuat: "+items.length+" bahan.");
-    }catch(e){ gerr(e); }
+      render(); bmsg("Data dimuat: "+items.length+" bahan.");
+    }catch(e){ berr(e); }
   });
   render();
 })();
